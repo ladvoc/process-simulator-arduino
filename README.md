@@ -1,24 +1,28 @@
 # Process Simulator Basic
 
 ## Hardware Overview
-The simulator defined in this repository models a process consisting of the following physical components:
 
-![Process hardware](/images/1.png)
+<img align="center" width="200" src="/images/1.png">
+  
+   The simulator defined in this repository models a process consisting of the following physical components:
 
-| Component | Description |
-| --------- | ----------- |
-| Tank | A hollow cylinder with finite dimensions is used to store a liquid. |
-| Inlet valve | An electronically controlled valve that can be opened or closed to control the inflow of a pressurized liquid. |
-| Drain valve | A secondary, electronically controlled valve that can be opened to allow gravity to drain the liquid in the tank. |
-| High limit | A sensor mounted near the top of the tank is used to detect when the liquid is at or above that height. |
-| Low limit | A sensor mounted near the bottom of the tank is used to detect when the liquid is at or above that height. |
-
+  | Component | Description |
+  | --------- | ----------- |
+  | Tank | A hollow cylinder with finite dimensions is used to store a liquid. |
+  | Inlet valve | An electronically controlled valve that can be opened or closed to control the inflow of a pressurized liquid. |
+  | Drain valve | A secondary, electronically controlled valve that can be opened to allow gravity to drain the liquid in the tank. |
+  | High limit | A sensor mounted near the top of the tank is used to detect when the liquid is at or above that height. |
+  | Low limit | A sensor mounted near the bottom of the tank is used to detect when the liquid is at or above that height. |
+  
 ### Potential application
 A potential use-case for this tank configuration is in a fire suppression system. In this application, the tank is filled with water to the upper limit through the inlet; if an unexpected drop in water occurs, more is added automatically. In the event of a fire, the drain is opened to rapidly release the tank's contents to suppress the fire. The fire itself could be detected with the addition of a smoke detection sensor or a push-button pressed by an operator.
 
 ## Control Overview
 A PLC controls the filling and draining of the tank based on the inputs from the limit switches. The logic used depends on the application.
-![Control Overview](/images/2.png)
+
+<p align="center">
+  <img width="600" src="/images/2.png">
+</p>
 
 ### Abstraction of the physical process
 The "Physical Process" is drawn in the shape of a cloud to indicate that the process may be run as a simulation. In this scenario, the PLC's inputs and outputs are directed towards a simulator in place of actual hardware (i.e. solenoid valves and photoelectric sensors). However, from PLC's perspective, there need not be any alteration to the inputs, outputs, or logic if the process is being simulated.
@@ -28,7 +32,9 @@ The "Physical Process" is drawn in the shape of a cloud to indicate that the pro
 ### Hardware
 The simulator's hardware consists of a [P1AM-100](https://www.automationdirect.com/open-source/home) Arduino-based CPU, I/O modules, and a bus of WS2812B addressable LEDs to indicate the current state of the tank, valves, and limit sensors. Additionally, a push-button allows the simulation to be reset.
 
-![Simulator hardware](/images/3.png)
+<p align="center">
+  <img width="800" src="/images/3.png">
+</p>
 
 #### LED bus
 Currently, the LED bus consists of 26 LEDs. The first 21 are used to indicate the current fill percentage of the tank by illuminating the appropriate number of LEDs in the series. For example, if the tank is 55% full, then 12 out of 21 will be illuminated (⌈0.55 * 21⌉ = 12). The remaining LEDs are used as discrete state indicators for the valves and limit sensors.
@@ -41,7 +47,9 @@ The simulator along with the PLC interacting with it is integrated into a Pelica
 ### Software
 This repository contains the Arduino sketch powering the simulator. The following flow diagram provides a high-level overview of how the program operates:
 
-![Software flow diagram](/images/5.png)
+<p align="center">
+  <img width="600" src="/images/5.png">
+</p>
 
 #### Modeling the physical process
 The simulation is modeled to reflect the physical process as closely as possible; constants are used to define physical characteristics such as the dimensions of the cylindrical tank, how long it should tank to fill and empty the tank, and the vertical height at which the limit sensors are mounted. From these constants, additional values are calculated such as the volume inside the tank and the flow rates required to achieve the desired fill and drain times.
