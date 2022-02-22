@@ -11,8 +11,8 @@
   | Tank | A hollow cylinder with finite dimensions is used to store a liquid. |
   | Inlet valve | An electronically controlled valve that can be opened or closed to control the inflow of a pressurized liquid. |
   | Drain valve | A secondary, electronically controlled valve that can be opened to allow gravity to drain the liquid in the tank. |
-  | High limit | A sensor mounted near the top of the tank is used to detect when the liquid is at or above that height. |
-  | Low limit | A sensor mounted near the bottom of the tank is used to detect when the liquid is at or above that height. |
+  | High limit | A sensor mounted near the top of the tank used to detect when the liquid is at or above that height. |
+  | Low limit | A sensor mounted near the bottom of the tank used to detect when the liquid is at or above that height. |
   
 ### Potential application
 A potential use-case for this tank configuration is in a fire suppression system. In this application, the tank is filled with water to the upper limit through the inlet; if an unexpected drop in water occurs, more is added automatically. In the event of a fire, the drain is opened to rapidly release the tank's contents to suppress the fire. The fire itself could be detected with the addition of a smoke detection sensor or a push-button pressed by an operator.
@@ -43,7 +43,6 @@ Currently, the LED bus consists of 26 LEDs. The first 21 are used to indicate th
 
 #### Display panel
 The simulator along with the PLC interacting with it is integrated into a Pelican case. The upper panel of the case will illustrate the physical hardware components being simulated, and the LEDs will display the current state of each component.
-
 ### Software
 This repository contains the Arduino sketch powering the simulator. The following flow diagram provides a high-level overview of how the program operates:
 
@@ -61,14 +60,26 @@ The simulation could be made more realistic by accounting for the following vari
 #### Class structure
 The program is structured into two key components to provide a level of abstraction between the simulation and how it is controlled and presented:
 
-##### `Process`
+##### `Process`:
 Where the actual simulation is performed; it holds an internal representation of the simulation state (i.e. the volume of liquid in the tank), and provides an interface to set the simulation inputs, calculate the new state, and read the updated state.
 
 ##### `ProcessIO`
-Responsible for interfacing the simulation with the outside world. It reads the inputs from the PLC (i.e. valve state), passes them to `Process`, and receives back the new state. That new state is written to the LED indicators via the `LEDBus` helper class.
+Responsible for interfacing the simulation with the outside world; it reads the inputs from the PLC (i.e. valve state), passes them to `Process`, and receives back the new state. That new state is then passed to the outside world; the LEDs and the discrete outputs read by the PLC are updated.
 
 #### Dependencies
 
 - [P1AM](https://github.com/facts-engineering/P1AM): provides a high-level interface to features specific to the P1AM-100 CPU and compatible IO modules.
 - [FastLED](https://fastled.io): a popular Arduino library for controlling addressable RGB LEDs. A series of LEDs is modeled in-memory as an array in which each element represents the RGB value of an individual LED. These RGB values are written over the LED's data bus by calling a write method.
 
+## Build Procedure
+In the [Arduino IDE](https://www.arduino.cc/en/software), select "Manage Libraries," search for each dependency listed above, and press install if required. Next, under settings, add the following URL in the "Additional Board Manager URLs" field:
+```
+https://raw.githubusercontent.com/facts-engineering/facts-engineering.github.io/master/package_productivity-P1AM-boardmanagermodule_index.json
+```
+With this URL added, select "Boards Manager" and install the board definition for "P1AM-100." With the CPU attached via USB and the apporiate serial port selected, the sketch can now be built and uploaded.
+
+## Unresolved Issues
+- The circuitry within the P1AM-GPIO module distorts the signal sent over the LED data bus—this results in the LEDs behaving erratically. The current workaround is remove the module and interface with the GPIO directly.
+
+## Links
+- [P1AM Documentation](https://facts-engineering.github.io): includes FAQs, a module configuration tool, and API reference.
