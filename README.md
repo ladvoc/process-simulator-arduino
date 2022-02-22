@@ -60,7 +60,7 @@ The simulation could be made more realistic by accounting for the following vari
 #### Class structure
 The program is structured into two key components to provide a level of abstraction between the simulation and how it is controlled and presented:
 
-##### `Process`:
+##### `Process`
 Where the actual simulation is performed; it holds an internal representation of the simulation state (i.e. the volume of liquid in the tank), and provides an interface to set the simulation inputs, calculate the new state, and read the updated state.
 
 ##### `ProcessIO`
