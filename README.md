@@ -30,7 +30,7 @@ The "Physical Process" is drawn in the shape of a cloud to indicate that the pro
 ## Implementation of the Simulator
 
 ### Hardware
-The simulator's hardware consists of a [P1AM-100](https://www.automationdirect.com/open-source/home) Arduino-based CPU, I/O modules, and a bus of WS2812B addressable LEDs to indicate the current state of the tank, valves, and limit sensors. Additionally, a push-button allows the simulation to be reset.
+The simulator's hardware consists of a [P1AM-100](https://www.automationdirect.com/open-source/home) Arduino-based CPU, I/O modules, and a bus of [WS2812B](https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf) addressable LEDs to indicate the current state of the tank, valves, and limit sensors. Additionally, a push-button allows the simulation to be reset.
 
 <p align="center">
   <img width="800" src="/images/3.png">
