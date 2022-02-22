@@ -26,6 +26,8 @@ void ProcessIO::outputCurrentState()
 
   // Update LED bus
   _ledBus->setLevelIndicator(_process->fillPercentage());
+  _ledBus->setDrainValveIndicator(_process->isDrainOpen());
+  _ledBus->setInletValveIndicator(_process->isInletOpen());
   _ledBus->setHLimitIndicator(_process->isAtHLimit());
   _ledBus->setLLimitIndicator(_process->isAtLLimit());
   _ledBus->update();

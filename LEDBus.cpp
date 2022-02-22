@@ -27,16 +27,24 @@ void LEDBus::setLevelIndicator(double value) {
   fill_solid(first + numOn, numOff, CRGB::Black);
 }
 
-void LEDBus::_setIndicator(int index, bool isIlluminated) {
-  _leds[index] = isIlluminated ? CRGB::Purple : CRGB::Black;
+void LEDBus::_setIndicator(int index, bool isIlluminated, CRGB onColor) {
+  _leds[index] = isIlluminated ? onColor : CRGB::Black;
+}
+
+void LEDBus::setInletValveIndicator(bool isIlluminated) {
+  _setIndicator(INLET_INDEX, isIlluminated, CRGB::Turquoise);
+}
+
+void LEDBus::setDrainValveIndicator(bool isIlluminated) {
+  _setIndicator(DRAIN_INDEX, isIlluminated, CRGB::Turquoise);
 }
 
 void LEDBus::setHLimitIndicator(bool isIlluminated) {
-  _setIndicator(H_LIMIT_INDEX, isIlluminated);
+  _setIndicator(H_LIMIT_INDEX, isIlluminated, CRGB::Purple);
 }
 
 void LEDBus::setLLimitIndicator(bool isIlluminated) {
-  _setIndicator(L_LIMIT_INDEX, isIlluminated);
+  _setIndicator(L_LIMIT_INDEX, isIlluminated, CRGB::Purple);
 }
 
 void LEDBus::update() {
