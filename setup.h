@@ -7,9 +7,8 @@
 
 // The model number of each module.
 static const char* MODULE_CONFIG[MODULE_COUNT] = {
-    "P1-15TD1"//,  // slot 1
-    //"P1-16TR",   // slot 2
-    //"P1-04DAL-1" // slot 3
+    "P1-15TD1", // slot 1 (3.3-24VDC sink output)
+    "P1-16ND3"  // slot 2 (12-24VDC input)
 };
 
 void performSetup();
