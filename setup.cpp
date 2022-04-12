@@ -6,9 +6,6 @@ void performSetup() {
 
   Serial.begin(115200);
 
-  // Wait for serial port.
-  while (!Serial) {}
-
   // Wait for modules to come online.
   while (!P1.init()) {}
 
