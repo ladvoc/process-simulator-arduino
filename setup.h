@@ -3,7 +3,7 @@
 #pragma once
 
 // The number of modules being used.
-#define MODULE_COUNT 1
+#define MODULE_COUNT 2
 
 // The model number of each module.
 static const char* MODULE_CONFIG[MODULE_COUNT] = {
