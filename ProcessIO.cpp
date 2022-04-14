@@ -10,6 +10,7 @@
 ProcessIO::ProcessIO(Process* process) {
     _process = process;
     _ledBus = new LEDBus();
+    _disp = new Display();
 
     // Configure inputs
     // pinMode(INLET_PIN, INPUT_PULLUP);
@@ -32,7 +33,10 @@ void ProcessIO::outputCurrentState()
   _ledBus->setLLimitIndicator(_process->isAtLLimit());
   _ledBus->update();
 
-  #ifdef WRITE_TO_SERIAL
+  // Update the display
+  _disp->update(_process->fillPercentage());
+
+#ifdef WRITE_TO_SERIAL
   Serial.flush();
   Serial.println("Simulation state:");
   Serial.print("Tank fill percentage: ");

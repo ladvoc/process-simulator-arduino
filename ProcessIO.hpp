@@ -1,4 +1,5 @@
 #include "LEDBus.hpp"
+#include "Display.hpp"
 
 #ifndef PROCESSIO_H
 #define PROCESSIO_H
@@ -13,9 +14,10 @@ class ProcessIO
 {
 	private:
 		Process* _process;
-    LEDBus* _ledBus;
+        LEDBus* _ledBus;
+        Display* _disp;
 
-	public:
+    public:
 		ProcessIO(Process* process);
     
     // Read current inputs from all sources and feed them into the simulation
