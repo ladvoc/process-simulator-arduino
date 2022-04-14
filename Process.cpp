@@ -4,11 +4,15 @@
 #include "Process.hpp"  
 
  Process::Process() {
+   reset();
+  _io = new ProcessIO(this);
+}
+
+void Process::reset() {
   _isInletOpen  = false; // Inlet valve starts closed
   _isDrainOpen  = false; // Drain valve starts closed
   _liquidVolume = 0;     // Tank starts empty
-  _lastUpdateTime = 0; 
-  _io = new ProcessIO(this);
+  _lastUpdateTime = millis();
 }
 
 void Process::simulateStep() {

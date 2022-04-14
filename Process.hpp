@@ -51,6 +51,9 @@ class Process
 	public:
 		Process();
 
+    // Reset the simulation to its inital state
+    void reset();
+
     // Perform a single simulation step and update outputs
 		void simulateStep();
 

@@ -54,6 +54,13 @@ void ProcessIO::outputCurrentState()
 }
 
 void ProcessIO::readInputs() {
+    
+  // Reset the simulation if the reset button is pressed
+  // TODO: hold to reset
+  if (P1.readDiscrete(2, 7) == HIGH) {
+    _process->reset();
+  }
+
   // When the built-in switch is on, fill the tank; when it is off, drain the tank
   _process->setInletState(digitalRead(SWITCH_BUILTIN) == HIGH);
   _process->setDrainState(digitalRead(SWITCH_BUILTIN) == LOW);
