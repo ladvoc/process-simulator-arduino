@@ -9,7 +9,7 @@
 // 2. Test alt. GPIO module
 // 3. Bug fix: serial
 // 4. Bug fix: dont start sim. untill LEDs ready
-// 5. Add screen
+// 5. Add screen [x]
 
 // Reference to the simulation
 Process* process;
