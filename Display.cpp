@@ -10,7 +10,6 @@
 #define SCREEN_ADDRESS 0x3C
 
 Display::Display(){
-    Serial.println("Display setup");
     _disp = new Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, SCREEN_RESET);
 
     if (!_disp->begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
@@ -19,8 +18,6 @@ Display::Display(){
 }
 
 void Display::update(double fillPercentage) {
-
-    Serial.println("Display update");
 
     // 1. Clear frame buffer
     _disp->clearDisplay();
