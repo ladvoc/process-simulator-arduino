@@ -30,23 +30,12 @@ void Display::update(double fillPercentage)
     _disp->setTextColor(SSD1306_WHITE);
     _disp->setCursor(0, 0);
 
-    if (fillPercentage <= 0)
-    {
-        _disp->print(F("Tank empty "));
-    }
-    else if (fillPercentage >= 1)
-    {
-        _disp->print(F("Tank full "));
-    }
-    else
-    {
-        _disp->print(F("Fill "));
-        _disp->print((int)(fillPercentage * 100));
-        _disp->print(F("%"));
+    _disp->print(F("Fill: "));
+    _disp->print((int)(fillPercentage * 100));
+    _disp->print(F("%"));
 
-        _disp->drawFastHLine(0, SCREEN_HEIGHT - 4, SCREEN_WIDTH, SSD1306_WHITE);
-        _disp->fillRect(0, SCREEN_HEIGHT - 4, SCREEN_WIDTH * fillPercentage, 4, SSD1306_WHITE);
-    }
+    _disp->drawRoundRect(0, SCREEN_HEIGHT - 8, SCREEN_WIDTH, 8, 4, SSD1306_WHITE);
+    _disp->fillRoundRect(0, SCREEN_HEIGHT - 8, SCREEN_WIDTH * fillPercentage, 8, 4, SSD1306_WHITE);
 
     // 3. Write the frame buffer to the display
     _disp->display();
