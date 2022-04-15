@@ -7,7 +7,7 @@
 class Display
 {
 private:
-    Adafruit_SSD1306* _disp;
+    Adafruit_SSD1306 *_disp;
 
 public:
     Display();

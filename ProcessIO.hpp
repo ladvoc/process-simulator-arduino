@@ -6,24 +6,24 @@
 #pragma once
 
 // If enabled, current simulation state is written over serial
-#define WRITE_TO_SERIAL
+// #define WRITE_TO_SERIAL
 
 class Process; // Forward decl.
 
 class ProcessIO
 {
-	private:
-		Process* _process;
-        LEDBus* _ledBus;
-        Display* _disp;
+private:
+    Process *_process;
+    LEDBus *_ledBus;
+    Display *_disp;
 
-    public:
-		ProcessIO(Process* process);
-    
+public:
+    ProcessIO(Process *process);
+
     // Read current inputs from all sources and feed them into the simulation
-		void readInputs();
+    void readInputs();
 
     // Write outputs based on the current simulation state
-		void outputCurrentState();
+    void outputCurrentState();
 };
 #endif

@@ -12,13 +12,15 @@
 // 5. Add screen [x]
 
 // Reference to the simulation
-Process* process;
+Process *process;
 
-void setup() {
-  performSetup(); 
-  process = new Process();
+void setup()
+{
+    performSetup();
+    process = new Process();
 }
 
-void loop() {
-  process->simulateStep();
+void loop()
+{
+    process->simulateStep();
 }

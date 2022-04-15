@@ -2,12 +2,13 @@
 #include <P1AM.h>
 
 #include "ProcessIO.hpp"
-#include "Process.hpp"  
+#include "Process.hpp"
 
 #define INLET_PIN 0
 #define DRAIN_PIN 1
 
-ProcessIO::ProcessIO(Process* process) {
+ProcessIO::ProcessIO(Process *process)
+{
     _process = process;
     _ledBus = new LEDBus();
     _disp = new Display();
@@ -20,48 +21,50 @@ ProcessIO::ProcessIO(Process* process) {
 
 void ProcessIO::outputCurrentState()
 {
-  // Write the current state of the high and low limit switches
-  // to the 3.3-24VDC sink output module installed in slot 1
-  P1.writeDiscrete(_process->isAtHLimit(), 1, 1);
-  P1.writeDiscrete(_process->isAtLLimit(), 1, 2);
+    // Write the current state of the high and low limit switches
+    // to the 3.3-24VDC sink output module installed in slot 1
+    P1.writeDiscrete(_process->isAtHLimit(), 1, 1);
+    P1.writeDiscrete(_process->isAtLLimit(), 1, 2);
 
-  // Update LED bus
-  _ledBus->setLevelIndicator(_process->fillPercentage());
-  _ledBus->setDrainValveIndicator(_process->isDrainOpen());
-  _ledBus->setInletValveIndicator(_process->isInletOpen());
-  _ledBus->setHLimitIndicator(_process->isAtHLimit());
-  _ledBus->setLLimitIndicator(_process->isAtLLimit());
-  _ledBus->update();
+    // Update LED bus
+    _ledBus->setLevelIndicator(_process->fillPercentage());
+    _ledBus->setDrainValveIndicator(_process->isDrainOpen());
+    _ledBus->setInletValveIndicator(_process->isInletOpen());
+    _ledBus->setHLimitIndicator(_process->isAtHLimit());
+    _ledBus->setLLimitIndicator(_process->isAtLLimit());
+    _ledBus->update();
 
-  // Update the display
-  _disp->update(_process->fillPercentage());
+    // Update the display
+    _disp->update(_process->fillPercentage());
 
 #ifdef WRITE_TO_SERIAL
-  Serial.flush();
-  Serial.println("Simulation state:");
-  Serial.print("Tank fill percentage: ");
-  Serial.println(_process->fillPercentage());
-  Serial.print("Inlet valve: ");
-  Serial.println(_process->isInletOpen() ? "OPEN" : "CLOSED");
-  Serial.print("Drain valve: ");
-  Serial.println(_process->isDrainOpen() ? "OPEN" : "CLOSED");
-  Serial.print("At high limit: ");
-  Serial.println(_process->isAtHLimit() ? "YES" : "NO");
-  Serial.print("At low limit: ");
-  Serial.println(_process->isAtLLimit() ? "YES" : "NO");
-  Serial.println();
-  #endif
+    Serial.flush();
+    Serial.println("Simulation state:");
+    Serial.print("Tank fill percentage: ");
+    Serial.println(_process->fillPercentage());
+    Serial.print("Inlet valve: ");
+    Serial.println(_process->isInletOpen() ? "OPEN" : "CLOSED");
+    Serial.print("Drain valve: ");
+    Serial.println(_process->isDrainOpen() ? "OPEN" : "CLOSED");
+    Serial.print("At high limit: ");
+    Serial.println(_process->isAtHLimit() ? "YES" : "NO");
+    Serial.print("At low limit: ");
+    Serial.println(_process->isAtLLimit() ? "YES" : "NO");
+    Serial.println();
+#endif
 }
 
-void ProcessIO::readInputs() {
-    
-  // Reset the simulation if the reset button is pressed
-  // TODO: hold to reset
-  if (P1.readDiscrete(2, 7) == HIGH) {
-    _process->reset();
-  }
+void ProcessIO::readInputs()
+{
 
-  // When the built-in switch is on, fill the tank; when it is off, drain the tank
-  _process->setInletState(digitalRead(SWITCH_BUILTIN) == HIGH);
-  _process->setDrainState(digitalRead(SWITCH_BUILTIN) == LOW);
+    // Reset the simulation if the reset button is pressed
+    // TODO: hold to reset
+    if (P1.readDiscrete(2, 7) == HIGH)
+    {
+        _process->reset();
+    }
+
+    // When the built-in switch is on, fill the tank; when it is off, drain the tank
+    _process->setInletState(digitalRead(SWITCH_BUILTIN) == HIGH);
+    _process->setDrainState(digitalRead(SWITCH_BUILTIN) == LOW);
 }
