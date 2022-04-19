@@ -11,6 +11,6 @@ private:
 
 public:
     Display();
-    void update(double fillPercentage);
+    void update(bool isRunning, double fillPercentage);
 };
 #endif

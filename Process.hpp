@@ -33,6 +33,9 @@ private:
     // Reference to the IO interface
     ProcessIO *_io;
 
+    // Whether or not the simulation has been started
+    bool _isRunning;
+
     // Whether or not liquid is currently flowing into the tank
     bool _isInletOpen;
 
@@ -50,6 +53,12 @@ private:
 
 public:
     Process();
+
+    // Begin running the simulation.
+    void start();
+
+    // Whether or not the simulation has been started.
+    bool isRunning() { return _isRunning; }
 
     // Reset the simulation to its inital state
     void reset();

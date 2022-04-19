@@ -19,7 +19,7 @@ Display::Display()
     }
 }
 
-void Display::update(double fillPercentage)
+void Display::update(bool isRunning, double fillPercentage)
 {
 
     // 1. Clear frame buffer
@@ -30,13 +30,25 @@ void Display::update(double fillPercentage)
     _disp->setTextColor(SSD1306_WHITE);
     _disp->setCursor(0, 0);
 
-    _disp->print(F("Fill: "));
-    _disp->print((int)(fillPercentage * 100));
-    _disp->print(F("%"));
+    if (!isRunning)
+    {
+        // Simulation is not running when fill percentage is < 0
+        _disp->setTextSize(2);
+        _disp->setCursor(0, 0);
+        _disp->println(F("Press\nStart"));
+        _disp->setCursor(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        _disp->println(F(">>"));
+    } else {
+        // Display tank fill percentage
+        _disp->print(F("Fill: "));
+        _disp->print((int)(fillPercentage * 100));
+        _disp->print(F("%"));
 
-    _disp->drawRoundRect(0, SCREEN_HEIGHT - 8, SCREEN_WIDTH, 8, 4, SSD1306_WHITE);
-    _disp->fillRoundRect(0, SCREEN_HEIGHT - 8, SCREEN_WIDTH * fillPercentage, 8, 4, SSD1306_WHITE);
+        // Progress bar
+        _disp->drawRoundRect(0, SCREEN_HEIGHT - 8, SCREEN_WIDTH, 8, 4, SSD1306_WHITE);
+        _disp->fillRoundRect(0, SCREEN_HEIGHT - 8, SCREEN_WIDTH * fillPercentage, 8, 4, SSD1306_WHITE);
+    }
 
-    // 3. Write the frame buffer to the display
+    // 3. Write buffer to display
     _disp->display();
 }

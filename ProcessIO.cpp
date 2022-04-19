@@ -35,22 +35,26 @@ void ProcessIO::outputCurrentState()
     _ledBus->update();
 
     // Update the display
-    _disp->update(_process->fillPercentage());
+    _disp->update(_process->isRunning(), _process->fillPercentage());
 
 #ifdef WRITE_TO_SERIAL
     Serial.flush();
     Serial.println("Simulation state:");
-    Serial.print("Tank fill percentage: ");
-    Serial.println(_process->fillPercentage());
-    Serial.print("Inlet valve: ");
-    Serial.println(_process->isInletOpen() ? "OPEN" : "CLOSED");
-    Serial.print("Drain valve: ");
-    Serial.println(_process->isDrainOpen() ? "OPEN" : "CLOSED");
-    Serial.print("At high limit: ");
-    Serial.println(_process->isAtHLimit() ? "YES" : "NO");
-    Serial.print("At low limit: ");
-    Serial.println(_process->isAtLLimit() ? "YES" : "NO");
-    Serial.println();
+    if (_process->isRunning()) {
+        Serial.print("Tank fill percentage: ");
+        Serial.println(_process->fillPercentage());
+        Serial.print("Inlet valve: ");
+        Serial.println(_process->isInletOpen() ? "OPEN" : "CLOSED");
+        Serial.print("Drain valve: ");
+        Serial.println(_process->isDrainOpen() ? "OPEN" : "CLOSED");
+        Serial.print("At high limit: ");
+        Serial.println(_process->isAtHLimit() ? "YES" : "NO");
+        Serial.print("At low limit: ");
+        Serial.println(_process->isAtLLimit() ? "YES" : "NO");
+        Serial.println();
+    } else {
+        Serial.println("Simulation not running");
+    }
 #endif
 }
 
@@ -64,6 +68,13 @@ void ProcessIO::readInputs()
         _process->reset();
     }
 
+    // Start the simulation when start button pressed
+    if (P1.readDiscrete(2, 8) == HIGH)
+    {
+        _process->start();
+    }
+
+    // TODO: read from discrete inputs
     // When the built-in switch is on, fill the tank; when it is off, drain the tank
     _process->setInletState(digitalRead(SWITCH_BUILTIN) == HIGH);
     _process->setDrainState(digitalRead(SWITCH_BUILTIN) == LOW);

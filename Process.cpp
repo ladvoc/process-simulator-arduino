@@ -11,15 +11,20 @@ Process::Process()
 
 void Process::reset()
 {
+    _isRunning = false;   // Wait for user to start the sim.
     _isInletOpen = false; // Inlet valve starts closed
     _isDrainOpen = false; // Drain valve starts closed
     _liquidVolume = 0;    // Tank starts empty
+}
+
+void Process::start()
+{
+    _isRunning = true;
     _lastUpdateTime = millis();
 }
 
 void Process::simulateStep()
 {
-
     // 1. Read inputs
     _io->readInputs();
 
@@ -32,6 +37,8 @@ void Process::simulateStep()
 
 void Process::_updateState()
 {
+    // Do not run simulation until start() called
+    if (!_isRunning) return;
 
     // How much time (in seconds) has passed since the last update
     double stepTime = (millis() - _lastUpdateTime) / 1000;
