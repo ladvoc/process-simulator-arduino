@@ -5,9 +5,6 @@
 #define PROCESSIO_H
 #pragma once
 
-// If enabled, current simulation state is written over serial
-// #define WRITE_TO_SERIAL
-
 class Process; // Forward decl.
 
 class ProcessIO

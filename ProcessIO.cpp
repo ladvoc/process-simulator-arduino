@@ -37,7 +37,7 @@ void ProcessIO::outputCurrentState()
     // Update the display
     _disp->update(_process->isRunning(), _process->fillPercentage());
 
-#ifdef WRITE_TO_SERIAL
+#ifdef SERIAL_DEBUG
     Serial.flush();
     Serial.println("Simulation state:");
     if (_process->isRunning()) {
