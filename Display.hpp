@@ -1,7 +1,5 @@
 #include <Adafruit_SSD1306.h>
 
-#ifndef DISPLAY_H
-#define DISPLAY_H
 #pragma once
 
 class Display
@@ -13,4 +11,3 @@ public:
     Display();
     void update(bool isRunning, double fillPercentage);
 };
-#endif

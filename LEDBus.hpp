@@ -1,7 +1,5 @@
 #include "FastLED.h"
 
-#ifndef LEDBUS_H
-#define LEDBUS_H
 #pragma once
 
 // The number of LEDs in the bus
@@ -48,4 +46,3 @@ public:
 
     ~LEDBus();
 };
-#endif

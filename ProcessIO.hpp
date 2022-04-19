@@ -1,8 +1,6 @@
 #include "LEDBus.hpp"
 #include "Display.hpp"
 
-#ifndef PROCESSIO_H
-#define PROCESSIO_H
 #pragma once
 
 class Process; // Forward decl.
@@ -23,4 +21,3 @@ public:
     // Write outputs based on the current simulation state
     void outputCurrentState();
 };
-#endif

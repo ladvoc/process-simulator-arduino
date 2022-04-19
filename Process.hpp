@@ -1,7 +1,5 @@
 #include "ProcessIO.hpp"
 
-#ifndef PROCESS_H
-#define PROCESS_H
 #pragma once
 
 // Dimensions of the cylindrical tank [meters]
@@ -86,4 +84,3 @@ public:
 
     ~Process();
 };
-#endif
