@@ -4,16 +4,11 @@
 
 #include "Display.hpp"
 
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 32
-#define SCREEN_RESET -1 // Share Arduino rest pin
-#define SCREEN_ADDRESS 0x3C
-
 Display::Display()
 {
-    _disp = new Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, SCREEN_RESET);
+    _disp = new Adafruit_SSD1306(WIDTH, HEIGHT, &Wire, RESET_PIN);
 
-    if (!_disp->begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
+    if (!_disp->begin(SSD1306_SWITCHCAPVCC, ADDR))
     {
         Serial.println(F("SSD1306 allocation failed"));
     }
@@ -36,7 +31,7 @@ void Display::update(bool isRunning, double fillPercentage)
         _disp->setTextSize(2);
         _disp->setCursor(0, 0);
         _disp->println(F("Press\nStart"));
-        _disp->setCursor(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        _disp->setCursor(WIDTH / 2, HEIGHT / 2);
         _disp->println(F(">>"));
     } else {
         // Display tank fill percentage
@@ -45,8 +40,8 @@ void Display::update(bool isRunning, double fillPercentage)
         _disp->print(F("%"));
 
         // Progress bar
-        _disp->drawRoundRect(0, SCREEN_HEIGHT - 8, SCREEN_WIDTH, 8, 4, SSD1306_WHITE);
-        _disp->fillRoundRect(0, SCREEN_HEIGHT - 8, SCREEN_WIDTH * fillPercentage, 8, 4, SSD1306_WHITE);
+        _disp->drawRoundRect(0, HEIGHT - 8, WIDTH, 8, 4, SSD1306_WHITE);
+        _disp->fillRoundRect(0, HEIGHT - 8, WIDTH * fillPercentage, 8, 4, SSD1306_WHITE);
     }
 
     // 3. Write buffer to display

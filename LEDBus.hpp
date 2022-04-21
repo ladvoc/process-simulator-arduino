@@ -4,27 +4,27 @@
 #define LEDBUS_H
 #pragma once
 
-// The number of LEDs in the bus
-const int LED_COUNT = 26;
-
-// The pin used written to
-const int DATA_PIN = 6;
-
-// The index of the first LED in the level indicator
-const int LEVEL_START_INDEX = 0;
-
-// The number of LEDs in the level indicator
-const int LEVEL_LED_COUNT = 22;
-
-// Indices of discrete indicators
-const int INLET_INDEX = 22;
-const int DRAIN_INDEX = 23;
-const int L_LIMIT_INDEX = 24;
-const int H_LIMIT_INDEX = 25;
-
 class LEDBus
 {
 private:
+    // The number of LEDs in the bus
+    static const int LED_COUNT = 26;
+
+    // The pin used written to
+    static const int DATA_PIN = 6;
+
+    // The index of the first LED in the level indicator
+    static const int LEVEL_START_INDEX = 0;
+
+    // The number of LEDs in the level indicator
+    static const int LEVEL_LED_COUNT = 22;
+
+    // Indices of discrete indicators
+    static const int INLET_INDEX = 22;
+    static const int DRAIN_INDEX = 23;
+    static const int L_LIMIT_INDEX = 24;
+    static const int H_LIMIT_INDEX = 25;
+
     // An array of RGB values which correspond to the LEDs in the bus
     CRGB _leds[LED_COUNT];
 

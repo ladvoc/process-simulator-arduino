@@ -4,9 +4,6 @@
 #include "ProcessIO.hpp"
 #include "Process.hpp"
 
-#define INLET_PIN 0
-#define DRAIN_PIN 1
-
 ProcessIO::ProcessIO(Process *process)
 {
     _process = process;

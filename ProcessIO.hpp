@@ -10,6 +10,9 @@ class Process; // Forward decl.
 class ProcessIO
 {
 private:
+    static const int INLET_PIN = 0;
+    static const int DRAIN_PIN = 1;
+
     Process *_process;
     LEDBus *_ledBus;
     Display *_disp;
