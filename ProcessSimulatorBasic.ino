@@ -16,7 +16,7 @@ Process *process;
 
 void setup()
 {
-    Serial.begin(115200);
+    Serial.begin(SERIAL_BAUDRATE);
 
     // Wait for modules to come online.
     while (!P1.init()) {}
