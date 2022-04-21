@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <P1AM.h>
 
-#include "config.h"
+#include "setup.h"
 #include "Process.hpp"
 
 // TODO:
@@ -16,30 +16,7 @@ Process *process;
 
 void setup()
 {
-    #ifdef SERIAL_DEBUG
-    Serial.begin(BAUDRATE);
-    #endif
-
-    // Wait for modules to come online.
-    while (!P1.init()) {}
-
-    // Ensure modules are plugged in as expected.
-    uint8_t errorFlags = P1.rollCall(MODULE_CONFIG, MODULE_COUNT);
-    if (errorFlags != 0) {
-
-        // Turn on the yellow LED.
-        pinMode(LED_BUILTIN, OUTPUT);
-        digitalWrite(LED_BUILTIN, HIGH);
-
-        // Print the given message every ten seconds until power is cycled.
-        while (true) {
-            #ifdef SERIAL_DEBUG
-            Serial.println("Modules not plugged in correctly.");
-            #endif
-            delay(10000);
-        }
-    }
-
+    performSetup();
     process = new Process();
 }
 

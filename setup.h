@@ -1,3 +1,5 @@
+#ifndef SETUP_H
+#define SETUP_H
 #pragma once
 
 // The number of modules being used.
@@ -9,8 +11,7 @@ static const char *MODULE_CONFIG[MODULE_COUNT] = {
     "P1-16ND3"  // slot 2 (12-24VDC input)
 };
 
-// If enabled, debug info and simulation state is
-// printed over serial.
-#define SERIAL_DEBUG
-#define BAUDRATE 115200
+void performSetup();
+static void fatalError(const char *message);
 
+#endif

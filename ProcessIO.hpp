@@ -1,7 +1,12 @@
 #include "LEDBus.hpp"
 #include "Display.hpp"
 
+#ifndef PROCESSIO_H
+#define PROCESSIO_H
 #pragma once
+
+// If enabled, current simulation state is written over serial
+// #define WRITE_TO_SERIAL
 
 class Process; // Forward decl.
 
@@ -21,3 +26,4 @@ public:
     // Write outputs based on the current simulation state
     void outputCurrentState();
 };
+#endif
