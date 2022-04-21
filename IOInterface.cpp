@@ -1,10 +1,10 @@
 #include <Arduino.h>
 #include <P1AM.h>
 
-#include "ProcessIO.hpp"
+#include "IOInterface.hpp"
 #include "Process.hpp"
 
-ProcessIO::ProcessIO(Process *process)
+IOInterface::IOInterface(Process *process)
 {
     _process = process;
     _ledBus = new LEDBus();
@@ -16,7 +16,7 @@ ProcessIO::ProcessIO(Process *process)
     pinMode(SWITCH_BUILTIN, INPUT);
 }
 
-void ProcessIO::outputCurrentState()
+void IOInterface::outputCurrentState()
 {
     // Write the current state of the high and low limit switches
     // to the 3.3-24VDC sink output module installed in slot 1
@@ -55,7 +55,7 @@ void ProcessIO::outputCurrentState()
 #endif
 }
 
-void ProcessIO::readInputs()
+void IOInterface::readInputs()
 {
 
     // Reset the simulation if the reset button is pressed

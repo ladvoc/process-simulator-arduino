@@ -6,7 +6,7 @@
 Process::Process()
 {
     reset();
-    _io = new ProcessIO(this);
+    _io = new IOInterface(this);
 }
 
 void Process::reset()

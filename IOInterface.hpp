@@ -7,7 +7,7 @@
 
 class Process; // Forward decl.
 
-class ProcessIO
+class IOInterface
 {
 private:
     static const int INLET_PIN = 0;
@@ -18,7 +18,7 @@ private:
     Display *_disp;
 
 public:
-    ProcessIO(Process *process);
+    IOInterface(Process *process);
 
     // Read current inputs from all sources and feed them into the simulation
     void readInputs();

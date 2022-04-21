@@ -1,4 +1,4 @@
-#include "ProcessIO.hpp"
+#include "IOInterface.hpp"
 
 #ifndef PROCESS_H
 #define PROCESS_H
@@ -31,7 +31,7 @@ class Process
 {
 private:
     // Reference to the IO interface
-    ProcessIO *_io;
+    IOInterface *_io;
 
     // Whether or not the simulation has been started
     bool _isRunning;
