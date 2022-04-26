@@ -11,10 +11,8 @@ IOInterface::IOInterface(Process *process) : _dinPrev{}
     _ledBus = new LEDBus();
     _disp = new Display();
 
-    // Configure inputs
-    // pinMode(INLET_PIN, INPUT_PULLUP);
-    // pinMode(DRAIN_PIN, INPUT_PULLUP);
-    pinMode(SWITCH_BUILTIN, INPUT);
+    // Not currently used
+    // pinMode(SWITCH_BUILTIN, INPUT);
 }
 
 void IOInterface::outputCurrentState()
@@ -79,11 +77,6 @@ void IOInterface::readInputs()
 
     // Store for next time
     memcpy(_dinPrev, _dinCurr, sizeof(_dinCurr));
-
-    // TODO: read from discrete inputs
-    // When the built-in switch is on, fill the tank; when it is off, drain the tank
-    _process->setInletState(digitalRead(SWITCH_BUILTIN) == HIGH);
-    _process->setDrainState(digitalRead(SWITCH_BUILTIN) == LOW);
 }
 
 void IOInterface::readDiscreteIn()
