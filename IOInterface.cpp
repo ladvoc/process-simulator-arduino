@@ -61,8 +61,18 @@ void IOInterface::outputCurrentState()
 
 void IOInterface::readInputs()
 {
+    // 1. Read state from discrete input module
     readDiscreteIn();
 
+    // 2. Check control button states, act accordingly
+    readControlButtons();
+
+    // 3. Store discrete input state for the next iteration
+    storeDiscreteIn();
+}
+
+inline void IOInterface::readControlButtons()
+{
     // Start the simulation when start button pressed
     if (isButtonPress(START_BTN_CH))
         _process->start();
@@ -74,12 +84,9 @@ void IOInterface::readInputs()
     // Reset the simulation if the reset button is pressed
     if (isButtonPress(RESET_BTN_CH))
         _process->reset();
-
-    // Store for next time
-    memcpy(_dinPrev, _dinCurr, sizeof(_dinCurr));
 }
 
-void IOInterface::readDiscreteIn()
+inline void IOInterface::readDiscreteIn()
 {
     // Read all channels
     uint16_t inputs = P1.readDiscrete(DIN_SLOT);
@@ -87,6 +94,11 @@ void IOInterface::readDiscreteIn()
     // Convert to bool array
     for (int i = 0; i < sizeof(_dinCurr); i++)
         _dinCurr[i] = inputs & (1 << i);
+}
+
+inline void IOInterface::storeDiscreteIn()
+{
+    memcpy(_dinPrev, _dinCurr, sizeof(_dinCurr));
 }
 
 inline bool IOInterface::readDiscreteIn(int channel)
