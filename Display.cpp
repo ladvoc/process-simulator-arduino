@@ -14,7 +14,7 @@ Display::Display()
     }
 }
 
-void Display::update(bool isRunning, double fillPercentage)
+void Display::update(bool isRunning, double fillPercentage, unsigned int param)
 {
 
     // 1. Clear frame buffer
@@ -27,12 +27,16 @@ void Display::update(bool isRunning, double fillPercentage)
 
     if (!isRunning)
     {
-        // Simulation is not running when fill percentage is < 0
-        _disp->setTextSize(2);
-        _disp->setCursor(0, 0);
-        _disp->println(F("Press\nStart"));
-        _disp->setCursor(WIDTH / 2, HEIGHT / 2);
-        _disp->println(F(">>"));
+        // "Ready" text
+        _disp->setCursor(50, HEIGHT * 0.25);
+        _disp->print(F("Ready"));
+        
+        // Param number
+        _disp->fillRoundRect(0, 0, 30, HEIGHT, 4, SSD1306_WHITE);
+        _disp->setCursor(8, HEIGHT * 0.2);
+        _disp->setTextSize(3);
+        _disp->setTextColor(SSD1306_BLACK);
+        _disp->print(param);
     } else {
         // Display tank fill percentage
         _disp->print(F("Fill: "));

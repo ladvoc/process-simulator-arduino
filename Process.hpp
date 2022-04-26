@@ -30,6 +30,12 @@ const double DRAIN_FLOWRATE = TANK_CAPACITY / EMPTY_TIME;
 class Process
 {
 private:
+    // The number of parameter numbers avalible
+    static const unsigned int PARAM_COUNT = 9;
+
+    // Current parameter number
+    unsigned int _currentParam;
+
     // Reference to the IO interface
     IOInterface *_io;
 
@@ -54,11 +60,17 @@ private:
 public:
     Process();
 
+    // Change the current parameter number.
+    void change();
+
     // Begin running the simulation.
     void start();
 
+    // Check the current parameter number
+    unsigned int currentParam() const { return _currentParam; }
+
     // Whether or not the simulation has been started.
-    bool isRunning() { return _isRunning; }
+    bool isRunning() const { return _isRunning; }
 
     // Reset the simulation to its inital state
     void reset();

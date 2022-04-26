@@ -13,3 +13,7 @@ static const char *MODULE_CONFIG[MODULE_COUNT] = {
 
 // Enable output of current simulation state
 #define SERIAL_DEBUG
+
+#define CHANGE_BTN_CH 6
+#define RESET_BTN_CH 7
+#define START_BTN_CH 8

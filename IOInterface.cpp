@@ -1,10 +1,11 @@
 #include <Arduino.h>
 #include <P1AM.h>
 
+#include "config.h"
 #include "IOInterface.hpp"
 #include "Process.hpp"
 
-IOInterface::IOInterface(Process *process)
+IOInterface::IOInterface(Process *process) : _dinPrev{}
 {
     _process = process;
     _ledBus = new LEDBus();
@@ -32,12 +33,15 @@ void IOInterface::outputCurrentState()
     _ledBus->update();
 
     // Update the display
-    _disp->update(_process->isRunning(), _process->fillPercentage());
+    _disp->update(_process->isRunning(), _process->fillPercentage(), _process->currentParam());
 
 #ifdef SERIAL_DEBUG
     Serial.flush();
     Serial.println("Simulation state:");
-    if (_process->isRunning()) {
+    Serial.print("Parameter number: ");
+    Serial.println(_process->currentParam());
+    if (_process->isRunning())
+    {
         Serial.print("Tank fill percentage: ");
         Serial.println(_process->fillPercentage());
         Serial.print("Inlet valve: ");
@@ -49,7 +53,9 @@ void IOInterface::outputCurrentState()
         Serial.print("At low limit: ");
         Serial.println(_process->isAtLLimit() ? "YES" : "NO");
         Serial.println();
-    } else {
+    }
+    else
+    {
         Serial.println("Simulation not running");
     }
 #endif
@@ -57,22 +63,51 @@ void IOInterface::outputCurrentState()
 
 void IOInterface::readInputs()
 {
-
-    // Reset the simulation if the reset button is pressed
-    // TODO: hold to reset
-    if (P1.readDiscrete(2, 7) == HIGH)
-    {
-        _process->reset();
-    }
+    readDiscreteIn();
 
     // Start the simulation when start button pressed
-    if (P1.readDiscrete(2, 8) == HIGH)
-    {
+    if (isButtonPress(START_BTN_CH))
         _process->start();
-    }
+
+    // Change the simulation param. when the "change" button is pressed
+    if (isButtonPress(CHANGE_BTN_CH))
+        _process->change();
+
+    // Reset the simulation if the reset button is pressed
+    if (isButtonPress(RESET_BTN_CH))
+        _process->reset();
+
+    // Store for next time
+    memcpy(_dinPrev, _dinCurr, sizeof(_dinCurr));
 
     // TODO: read from discrete inputs
     // When the built-in switch is on, fill the tank; when it is off, drain the tank
     _process->setInletState(digitalRead(SWITCH_BUILTIN) == HIGH);
     _process->setDrainState(digitalRead(SWITCH_BUILTIN) == LOW);
+}
+
+void IOInterface::readDiscreteIn()
+{
+    // Read all channels
+    uint16_t inputs = P1.readDiscrete(DIN_SLOT);
+
+    // Convert to bool array
+    for (int i = 0; i < sizeof(_dinCurr); i++)
+        _dinCurr[i] = inputs & (1 << i);
+}
+
+inline bool IOInterface::readDiscreteIn(int channel)
+{
+    // Convert to array index, read value
+    return _dinCurr[channel - 1];
+}
+
+inline bool IOInterface::isButtonPress(int channel)
+{
+    // Convert to array index
+    channel -= 1;
+
+    // True when channel from low to high occured
+    return _dinCurr[channel] == HIGH &&
+           _dinPrev[channel] == LOW;
 }
