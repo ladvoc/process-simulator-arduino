@@ -1,5 +1,6 @@
 #include "LEDBus.hpp"
 #include "Display.hpp"
+#include "config.h"
 
 #ifndef PROCESSIO_H
 #define PROCESSIO_H
@@ -13,15 +14,9 @@ private:
     static const int INLET_PIN = 0;
     static const int DRAIN_PIN = 1;
 
-    // The slot in which the discrete input module is installed.
-    static const int DIN_SLOT  = 2;
-
-    // The number of channels provided by the discrete input module.
-    static const int DIN_CH_COUNT = 16;
-
     // Storege for current and previous discrete inputs states.
-    bool _dinPrev[DIN_CH_COUNT];
-    bool _dinCurr[DIN_CH_COUNT];
+    bool _dinPrev[DIGITAL_IN_COUNT];
+    bool _dinCurr[DIGITAL_IN_COUNT];
 
     // Read all discrete inputs states
     inline void readDiscreteIn();

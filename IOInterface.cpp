@@ -13,14 +13,17 @@ IOInterface::IOInterface(Process *process) : _dinPrev{}
 
     // Not currently used
     // pinMode(SWITCH_BUILTIN, INPUT);
+
+    // TODO: REMOVE
+    process->setInletState(true);
 }
 
 void IOInterface::outputCurrentState()
 {
     // Write the current state of the high and low limit switches
     // to the 3.3-24VDC sink output module installed in slot 1
-    P1.writeDiscrete(_process->isAtHLimit(), 1, 1);
-    P1.writeDiscrete(_process->isAtLLimit(), 1, 2);
+    P1.writeDiscrete(_process->isAtHLimit(), SINK_OUT_SLOT, 1);
+    P1.writeDiscrete(_process->isAtLLimit(), SINK_OUT_SLOT, 2);
 
     // Update LED bus
     _ledBus->setLevelIndicator(_process->fillPercentage());
@@ -89,7 +92,7 @@ inline void IOInterface::readControlButtons()
 inline void IOInterface::readDiscreteIn()
 {
     // Read all channels
-    uint16_t inputs = P1.readDiscrete(DIN_SLOT);
+    uint16_t inputs = P1.readDiscrete(DIGITAL_IN_SLOT);
 
     // Convert to bool array
     for (int i = 0; i < sizeof(_dinCurr); i++)
