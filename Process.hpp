@@ -66,13 +66,17 @@ public:
     // Begin running the simulation.
     void start();
 
+    // Stop running the simulation.
+    void stop();
+
     // Check the current parameter number
     unsigned int currentParam() const { return _currentParam; }
 
     // Whether or not the simulation has been started.
     bool isRunning() const { return _isRunning; }
 
-    // Reset the simulation to its inital state
+    // Reset the simulation to its inital state. If the
+    // simulation was running, it will continue to run.
     void reset();
 
     // Perform a single simulation step and update outputs

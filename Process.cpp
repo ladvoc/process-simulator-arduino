@@ -5,23 +5,42 @@
 
 Process::Process()
 {
+    // Set defaults for simulation variables.
     reset();
+
+    // Simulation is not running initially.
+    _isRunning = false;
+
+    // Default parameter.
+    _currentParam = 1;
+
     _io = new IOInterface(this);
 }
 
 void Process::reset()
 {
-    _currentParam = 1;
-    _isRunning = false;   // Wait for user to start the sim.
-    _isInletOpen = false; // Inlet valve starts closed
-    _isDrainOpen = false; // Drain valve starts closed
-    _liquidVolume = 0;    // Tank starts empty
+    // Any variable directly used in modeling the simulation
+    // should be set to its inital value here.
+
+    // Inlet valve starts closed
+    _isInletOpen = false;
+
+    // Drain valve starts closed
+    _isDrainOpen = false;
+
+    // Tank starts empty
+    _liquidVolume = 0;
 }
 
 void Process::change()
 {
-    // If the simulation is running, do nothing.
-    if (_isRunning) return;
+    // If the simulation is running, stop and reset to expose
+    // the start screen.
+    if (_isRunning) {
+        _isRunning = false;
+        reset();
+        return;
+    }
 
     // Incremenet by one; clamp by PARAM_COUNT.
     _currentParam = _currentParam == PARAM_COUNT ? 1 : _currentParam + 1;
@@ -29,6 +48,9 @@ void Process::change()
 
 void Process::start()
 {
+     // If the simulation is already running, do nothing.
+    if (_isRunning) return;
+
     _isRunning = true;
     _lastUpdateTime = millis();
 }
