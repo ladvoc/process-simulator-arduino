@@ -1,3 +1,7 @@
+/// Copyright © 2022 Jacob Gelman
+/// This code is licensed under the MIT License.
+/// See the LICENSE file in the project root for license terms.
+
 #include "LEDBus.hpp"
 #include "Display.hpp"
 #include "config.h"

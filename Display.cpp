@@ -1,3 +1,7 @@
+/// Copyright © 2022 Jacob Gelman
+/// This code is licensed under the MIT License.
+/// See the LICENSE file in the project root for license terms.
+
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -30,7 +34,7 @@ void Display::update(bool isRunning, double fillPercentage, unsigned int param)
         // "Ready" text
         _disp->setCursor(50, HEIGHT * 0.25);
         _disp->print(F("Ready"));
-        
+
         // Param number
         _disp->fillRoundRect(0, 0, 30, HEIGHT, 4, SSD1306_WHITE);
         _disp->setCursor(8, HEIGHT * 0.2);
